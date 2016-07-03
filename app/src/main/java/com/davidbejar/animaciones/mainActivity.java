@@ -19,7 +19,7 @@ import android.widget.ViewSwitcher;
 public class mainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -29,6 +29,14 @@ public class mainActivity extends AppCompatActivity {
         final TextView textoAnimado = (TextView) findViewById(R.id.textoAnimado);
         final Button botonAnimar = (Button) findViewById(R.id.botonAnimar) ;
         final TextSwitcher textSwitcher = (TextSwitcher) findViewById(R.id.textSwitcher);
+
+        final Button botonPrueba = (Button) findViewById(R.id.buttonNuevo) ;
+
+
+        final TextSwitcher textSwitcherprueba = (TextSwitcher) findViewById(R.id.textSwitcherprueba);
+
+
+
 
 
         // BEGIN_INCLUDE(setup)
@@ -47,7 +55,40 @@ public class mainActivity extends AppCompatActivity {
         textSwitcher.setOutAnimation(out);
         // END_INCLUDE(setup)
 
-        textSwitcher.setText("Hola Mundo");
+        textSwitcher.setCurrentText("Hola Mundo");
+
+        textSwitcherprueba.setInAnimation(in);
+        textSwitcherprueba.setOutAnimation(out);
+        final TextView t1 = new TextView(this);
+        final TextView t2 = new TextView(this);
+        t1.setText("Textview1");
+        t1.setTextSize(20);
+        t1.setTextColor(getResources().getColor(R.color.colorAccent));
+        t2.setTextSize(20);
+        t2.setText("Textview2");
+        textSwitcherprueba.addView(t1);
+        textSwitcherprueba.addView(t2);
+
+        final String textoPrueba;
+
+
+
+        botonPrueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String txt = ((TextView) textSwitcherprueba.getCurrentView()).getText().toString();
+
+                if ( txt == t1.getText().toString() ){
+                    textSwitcherprueba.setText(t2.getText().toString());
+                }
+                else{
+                    textSwitcherprueba.setText(t1.getText());
+
+                }
+            }
+        });
+
 
 
 
@@ -73,18 +114,9 @@ public class mainActivity extends AppCompatActivity {
                 else{
                     textSwitcher.setText("Animaciones en Android");
                 }
-
-
-
                 textoAnimado.setText(texto);
-
-
-
-
             }
         });
-
-
 
 
 
@@ -140,16 +172,17 @@ public class mainActivity extends AppCompatActivity {
      * The {@link android.widget.ViewSwitcher.ViewFactory} used to create {@link android.widget.TextView}s that the
      * {@link android.widget.TextSwitcher} will switch between.
      */
-    private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
+    public ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
 
         @Override
         public View makeView() {
 
             // Create a new TextView
-            TextView t = new TextView(mainActivity.this);
-            t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-            t.setTextAppearance(mainActivity.this, android.R.style.TextAppearance_Large);
-            return t;
+            //TextView t = new TextView(mainActivity.this);
+            TextView textViewprueba = new TextView(mainActivity.this);
+            textViewprueba.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+            textViewprueba.setTextAppearance(mainActivity.this, android.R.style.TextAppearance_Large);
+            return textViewprueba;
         }
     };
     // END_INCLUDE(factory)
